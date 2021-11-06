@@ -1,0 +1,51 @@
+title: main
+main:
+  - (label): lbl1
+  - info:
+      contents:
+        - content: |
+            # Csardas Lite Demo
+          bgurl: https://sebastian.graphics/bg_1_b.png
+  - (label): lbl2
+  - segue:
+      title: I am the title
+      subtitle: I am the subtitle
+      toptitle: I am the top title
+      bg: https://sebastian.graphics/bg_1_x.png
+  - conversation:
+      character:
+        - name: 侍应
+          icon: https://test.pandateacher.com/cleword-explore/surfer/img/avatar.423811d2.svg
+          position: left
+        - name: 沈默
+          icon: https://files.mastodon.social/accounts/avatars/000/028/906/original/8f6471c3a61ff08f.png
+          position: right
+        - name: 永泽
+          icon: https://files.mastodon.social/accounts/avatars/000/028/906/original/8f6471c3a61ff08f.png
+          position: left
+      contents: 
+        - bg:
+            type: image
+            url: https://sebastian.graphics/bg_2_x.png
+        - h1: 序章・一切的开端
+
+        - _: 广式酒楼・明月楼，早上八时半。
+        - halfview:
+            type: iframe
+            url: "#/standalone/v0/Katex"
+        - message: |
+            \frac{nihao}{zaijian}
+        - _: 当我得知这里可以喝早茶的时候，稍微有点吃惊。
+        - chatbox: bottom_left
+        - _: 之前在大学的时候，终日埋头念书，对周边的吃喝玩乐可是一概不知。
+        - chatbox: bottom_right
+        - _: 并不是说学业繁忙没有休闲的时间，只是不知为何我没有将那时间用在吃喝玩乐上。还在ACM队的时候则打题，退出ACM队之后便是躲进学校的琴房里练萨克斯。以至于不曾知道深圳这种北方气息浓厚的城市，居然还会有广式酒楼。
+        - chatbox: top_left
+        - _: 有约在这里喝早茶，但是对方似乎还没有来。
+        - chatbox: top_right
+        - _: 我走了进去。
+        - branch:
+            - text: lbl1 label 1
+              target: lbl1
+            - text: lbl2 label 2
+              target: lbl2
