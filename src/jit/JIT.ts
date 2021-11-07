@@ -4,9 +4,7 @@ import { AsTypeTaggedDict } from "@src/utils/AuxFuncs";
 import { _pushComponentCall } from "./Common";
 import { CompileForConversation } from "./subsystem/Conversation";
 import { compileMachineCommonInstr, isMachineCommonInstr } from "./subsystem/MachineCommon";
-import { CommonSevenComponentIndex, InfoSevenComponentIndex, SegueSevenComponentIndex, ConversationSevenComponentIndex } from '@src/seven/SevenComponentIndex';
-import { ErrorComponent } from '@src/seven/component/Error.SevenComponent';
-import { MACHINE } from '@src/seven/Machine';
+import { CommonSevenComponentIndex, InfoSevenComponentIndex, SegueSevenComponentIndex, ConversationSevenComponentIndex, TableOfContentsComponentIndex } from '@src/seven/SevenComponentIndex';
 // NOTE: we have to do at least 2 pass here because we can't possibly figure out
 // the position of every (label) in the source code.
 // this leads to the discrimination of two different kind of blocks: those which
@@ -56,6 +54,17 @@ function _pass1_generation(x: any) {
                 _pushComponentCall(res, CommonSevenComponentIndex.LoadFile, {fileName: X.data});
                 break;
             }
+            case 'toc': {
+                _pushComponentCall(res, CommonSevenComponentIndex.SetMode, {modeType: 'toc'});
+                if (X.data.bg_color) {
+                    _pushComponentCall(res, TableOfContentsComponentIndex.BgColor, {color: X.data.bg_color});
+                }
+                if (X.data.bg_image) {
+                    _pushComponentCall(res, TableOfContentsComponentIndex.BgImage, {url: X.data.bg_image});
+                }
+                _pushComponentCall(res, TableOfContentsComponentIndex.SetData, {data: X.data.contents});
+                break;
+            }
             case 'info': {
                 _pushComponentCall(res, CommonSevenComponentIndex.SetMode, {modeType: 'info'});
                 _pushComponentCall(res, InfoSevenComponentIndex.LoadInfoPage, {
@@ -63,14 +72,12 @@ function _pass1_generation(x: any) {
                         let res: any = {};
                         res.format = v.type || 'markdown';
                         res.content = v.content;
-                        if (v.bgurl) {
-                            res.backgroundImageUrl = v.bgurl;
-                        }
+                        res.bg_image = v.bg_image;
+                        res.bg_color = v.bg_color;
                         return res;
                     }),
-                    _bgList: X.data.contents.filter((v: any) => v.bgurl && v.bgurl.trim()).map((v: any) => v.bgurl),
+                    _bgList: X.data.contents.filter((v: any) => v.bg_image && v.bg_image.trim()).map((v: any) => v.bg_image),
                 });
-                _pushComponentCall(res, CommonSevenComponentIndex.Pause, {});
                 break;
             }
             case 'segue': {
@@ -78,8 +85,9 @@ function _pass1_generation(x: any) {
                 _pushComponentCall(res, SegueSevenComponentIndex.Set, {
                     title: X.data.title || undefined,
                     topTitle: X.data.toptitle || undefined,
-                    subTitle: X.data.subtitle || undefined,
-                    bgUrl: X.data.bg || undefined,
+                    bgImage: X.data.bg_image || undefined,
+                    bgColor: X.data.bg_color || undefined,
+                    description: X.data.description || undefined,
                     position: X.data.position || undefined,
                 });
                 break;
@@ -157,11 +165,7 @@ function _pass4_emptyInstrCheck(x: any[]) {
     for (let i = 0; i < x.length; i++) {
         const v = x[i];
         if (v._ === undefined) {
-            ErrorComponent.call({
-                header: 'JIT produced unusable data.',
-                message: JSON.stringify(x, undefined, '    '),
-            }, MACHINE);
-            throw new Error();
+            throw new Error('JIT produced unusable data.' + JSON.stringify(v));
         }
     }
 }

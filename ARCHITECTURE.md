@@ -38,18 +38,25 @@ Csárdás Lite是由Csárdás分化出来的学习系统，目的是用于简短
 
 ## SevenMachine Component
 
+所有带`(pause)`的指令机器执行后都会暂停，需要使用`MACHINE.step()`继续。
+
 + `MODE`(modeType: string)
+  - TableOfContents modeType=`'toc'`
+    + `TOC_BG_COLOR`(color: string)
+    + `TOC_BG_IMG`(url: string)
+    + (pause) `TOC_SET_DATA`(data: {title: string, description?: string, targetFileName: string}[])
+
   - `CONVERSATIONAL` （modeType="conversation"）
     + `CONV_CLEAR`()
-    + `CONV_HEADER`(level: number, text: string)
-    + `CONV_NARRATOR`(text: string)
-    + `CONV_TEXT`(name: string, iconUrl: string, position?: string, text: string)
+    + (pause) `CONV_HEADER`(level: number, text: string)
+    + (pause) `CONV_NARRATOR`(text: string)
+    + (pause) `CONV_TEXT`(name: string, iconUrl: string, position?: string, text: string)
       - `_order: number`: The order of phrase. When the order is bigger than 0, the name of the character will not be displayed.
     + `CONV_SET_MODE`(mode: Mode)
       - `type Mode = 'fullview' | 'chatbox'`
     + `CONV_SET_ANCHOR`(anchor: Anchor)
       - `type Anchor = (TOP_LEFT)1 | (TOP_RIGHT)2 | (BOTTOM_LEFT)3 | (BOTTOM_RIGHT)4'
-    + `CONV_BRANCH`(branchList: {text: string, target: number}[])
+    + (pause) `CONV_BRANCH`(branchList: {text: string, target: number}[])
     + `CONV_SET_BG`(type: string, url: string)
     + `CONV_SET_CHAR`(characterDict: {[name: string]: ConversationCharacterDescriptor})
       - ``` typescript
@@ -65,18 +72,19 @@ Csárdás Lite是由Csárdás分化出来的学习系统，目的是用于简短
     + `CONV_SET_HALFVIEW`
       - `CONV_SET_HALFVIEW`(type: 'iframe'|'image', url: string)
       - `CONV_SET_HALFVIEW`(type: 'color', color: string)
-    + `CONV_SEND_MSG`(data: any, stopAfterSend: boolean = false)
+    + (pause?) `CONV_SEND_MSG`(data: any, stopAfterSend: boolean = false)
       - send iframe message to halfview/background iframe.
+      - 注意：机器是否停止取决于`stopAfterSend`
   - `info`（modeType="info")
-    + `INFO_LOAD`(pageList: {content: string, format?: string, bgurl?: string}[])
+    + (pause) `INFO_LOAD`(pageList: {content: string, format?: string, bg_url?: string, bg_color?: string}[])
     + `INFO_GOTO`(pageIndex: number)
-    + `INFO_ADD`(page: {content: string, format?: string, bgurl?: string}, index?: number)
+    + `INFO_ADD`(page: {content: string, format?: string, bg_url?: string, bg_color?: string}, index?: number)
     <!-- + `INFO_CHANGE`(pageIndex: number, page: {content: string, format?: string, bgurl?: string}) -->
     + `INFO_DELETE`(pageIndex: number)
     + `INFO_PREV`()
     + `INFO_NEXT`()
   - `SEGUE`（modeType="segue"）
-    + `SEGUE_SET`(title?: string, topTitle?: string, subTitle?: string, bgUrl?: string)
+    + (pause) `SEGUE_SET`(title?: string, topTitle?: string, bgColor?: string, bgImage?: string, description?: string)
 + Timing
   - `WAIT`(ms: number)
 + Common
@@ -84,10 +92,10 @@ Csárdás Lite是由Csárdás分化出来的学习系统，目的是用于简短
   - `DESCRIPTION`(description: string)
   - `ERROR`(message: string, header?: string)
   - `LISTEN`(name: string, callback: any)
-  - `PAUSE`()
+  - (pause) `PAUSE`()
     + Stop machine from executing further & wait for component to manually step forward.
-  - `LOAD`(data: data)
-  - `LOAD_FILE`(fileName: string)
+  - (pause) `LOAD`(data: data)
+  - (pause) `LOAD_FILE`(fileName: string)
 
 
 ## 数据流向

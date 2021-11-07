@@ -11,7 +11,6 @@
     <style scoped>
     .ui-enterprompt {
         font-size: 1em;
-        color: white;
         animation-duration: 3s;
         animation-iteration-count: infinite;
         animation-name: fade-in-out;

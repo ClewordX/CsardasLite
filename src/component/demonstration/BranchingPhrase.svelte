@@ -1,12 +1,19 @@
 <script lang="ts">
 import { MACHINE } from "@src/seven/Machine";
 import { ConversationBranchingDescriptor } from "@src/store/machine/Conversation.Store";
+import { onMount } from "svelte";
+import PhraseListUIStore from "./PhraseListUI.Store";
     
     export let phraseDescriptor: ConversationBranchingDescriptor;
 
     function branchTo(x: number) {
+        PhraseListUIStore.enableNext();
         MACHINE.goto(x);
     }
+
+    onMount(() => {
+        PhraseListUIStore.disableNext();
+    });
     </script>
     
 

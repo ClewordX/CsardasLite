@@ -8,6 +8,7 @@ import BranchingPhrase from "./BranchingPhrase.svelte";
 import { ConversationDisplayAnchor, ConversationPhraseDescriptor, ConversationSizeMode } from "@src/store/machine/Conversation.Store";
 import MachineStore from "@src/store/Machine.Store";
 import { MACHINE } from "@src/seven/Machine";
+import PhraseListUIStore from "./PhraseListUI.Store";
 
 let phraseList: ConversationPhraseDescriptor[];
 let nextKeyLocked: boolean = false;
@@ -20,6 +21,7 @@ let phraseListDisplayAnchor: ConversationDisplayAnchor;
 let showChatbox: boolean = true;
 let showByHide: boolean = false;
 onMount(() => {
+    PhraseListUIStore.enableNext();
     subscriptionList.push(MachineStore.Conversation.currentPhraseListState.currentSizeMode.subscribe((v) => {
         console.log(v);
         phraseListSizeMode = v;
@@ -37,9 +39,9 @@ onMount(() => {
         : v.type === 'iframe'? v.url
         : v.color;
     }));
-    sevenSubscriptionList.push(MACHINE.lockVar.subscribe((v) => {
+    subscriptionList.push(PhraseListUIStore.isNextButtonAvailable.subscribe((v) => {
         nextKeyLocked = !v;
-    }));
+    }))
 });
 onDestroy(() => {
     subscriptionList.forEach((v) => v());
@@ -260,7 +262,7 @@ function hidePhraseList() {
             right: 50% !important;
         }
     }
-    .phrase-list-next-false {
+    .phrase-list-next-true {
         color: #7f7f7f;
     }
     /* TODO: this css is freaking slow. fix this. */

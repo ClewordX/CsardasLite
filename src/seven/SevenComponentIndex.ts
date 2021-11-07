@@ -38,3 +38,10 @@ export enum InfoSevenComponentIndex {
     PrevPage = 'INFO_PREV',
     NextPage = 'INFO_NEXT',
 }
+
+export enum TableOfContentsComponentIndex {
+    BgColor = 'TOC_BG_COLOR',
+    BgImage = 'TOC_BG_IMG',
+    SetData = 'TOC_SET_DATA',
+}
+

@@ -1,6 +1,6 @@
 import type { SevenMachineProgram } from "@bctnry/seven";
 import { ConversationSevenComponentIndex } from "@src/seven/SevenComponentIndex";
-import { ConversationCharacterDescriptor } from "@src/store/machine/Conversation.Store";
+import type { ConversationCharacterDescriptor } from "@src/store/machine/Conversation.Store";
 import { AsTypeTaggedDict } from "@src/utils/AuxFuncs";
 import * as yaml from "js-yaml";
 import { _pushComponentCall } from "../Common";
@@ -70,8 +70,12 @@ export function CompileForConversation(res: SevenMachineProgram, x: any) {
                 _pushComponentCall(res, ConversationSevenComponentIndex.SetMode, { mode: v.data });
                 break;
             }
-            case 'bg': {
-                _pushComponentCall(res, ConversationSevenComponentIndex.SetBackground, { type: v.data.type, url: v.data.url, color: v.data.color });
+            case 'bg_image': {
+                _pushComponentCall(res, ConversationSevenComponentIndex.SetBackground, { type: 'image', url: v.data });
+                break;
+            }
+            case 'bg_color': {
+                _pushComponentCall(res, ConversationSevenComponentIndex.SetBackground, { type: 'color', color: v.data });
                 break;
             }
             case 'halfview': {

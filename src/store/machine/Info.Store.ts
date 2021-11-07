@@ -16,8 +16,8 @@ function _InfoStore() {
         currentBgUrl: [],
         
         reset: () => {
-            store.pages.set([]);
             store.currentPage.set(0);
+            store.pages.set([{content:'', format:'markdown'}]);
         },
         loadInfoPage: (pageList: InfoPage[], cacheBgList: string[] = []) => {
             store.currentBgUrl = cacheBgList;

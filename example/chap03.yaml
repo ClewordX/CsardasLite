@@ -1,17 +1,16 @@
-title: main
+title: main chap03
 main:
   - (label): lbl1
   - info:
       contents:
         - content: |
             # Csardas Lite Demo
-          bgurl: https://sebastian.graphics/bg_1_b.png
+          bg_image: https://sebastian.graphics/bg_1_b.png
   - (label): lbl2
   - segue:
       title: I am the title
       subtitle: I am the subtitle
-      toptitle: I am the top title
-      bg: https://sebastian.graphics/bg_1_x.png
+      bg_image: https://sebastian.graphics/bg_1_x.png
   - conversation:
       character:
         - name: 侍应
@@ -24,9 +23,7 @@ main:
           icon: https://files.mastodon.social/accounts/avatars/000/028/906/original/8f6471c3a61ff08f.png
           position: left
       contents: 
-        - bg:
-            type: image
-            url: https://sebastian.graphics/bg_2_x.png
+        - bg_image: https://sebastian.graphics/bg_2_x.png
         - h1: 序章・一切的开端
 
         - _: 广式酒楼・明月楼，早上八时半。

@@ -1,0 +1,14 @@
+title: main
+main:
+  - toc:
+      bg_color: black
+      contents:
+        - title: 第一章 blahblahblahblah
+          description: 第一章描述
+          file: chap01
+        - title: 第二章 blahblah
+          description: 第二章描述
+          file: chap02
+        - title: 第三章 blahblah
+          description: 第三章描述
+          file: chap03

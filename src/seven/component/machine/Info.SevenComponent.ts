@@ -7,7 +7,6 @@ export const LoadInfoPageComponent: SevenComponent = {
     name: InfoSevenComponentIndex.LoadInfoPage,
     call: (args: {[name: string]: any}, m: SevenMachine) => {
         MachineStore.Info.loadInfoPage(args.pageList, args._bgList);
-        return true;
     }
 };
 

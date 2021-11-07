@@ -8,8 +8,9 @@ export const SegueSetComponent: SevenComponent = {
         MachineStore.Segue.set({
             currentTitle: args.title || '',
             currentTopTitle: args.topTitle || '',
-            currentSubTitle: args.subTitle || '',
-            currentBgUrl: args.bgUrl || '',
+            currentBgUrl: args.bgImage || '',
+            currentBgColor: args.bgColor || '',
+            currentDescription: args.description || '',
             currentPosition: args.position || 'center',
         });
     }

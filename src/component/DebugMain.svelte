@@ -5,7 +5,8 @@
     import { jit } from '@src/jit/JIT';
     import { MACHINE } from '@src/seven/Machine';
     import { onDestroy, onMount } from 'svelte';
-    import SystemStateStore from '@src/store/SystemState.Store';
+    import SystemStateStore, { SystemCurrentStatus } from '@src/store/SystemState.Store';
+import SystemErrorStore from '@src/store/SystemError.Store';
 
     // editor.
     let mouseX = 0;
@@ -27,11 +28,16 @@
 
     function loadMockProgram() {
         SystemStateStore.notReady();
-        let jitted = jit(yaml.load(elemEditor.value));
-        MACHINE.loadProgram(jitted);
-        MACHINE.unlock();
-        SystemStateStore.ready();
-        MACHINE.step();
+        try {
+            let jitted = jit(yaml.load(elemEditor.value));
+            MACHINE.loadProgram(jitted);
+            MACHINE.unlock();
+            SystemStateStore.ready();
+            MACHINE.step();
+        } catch (e) {
+            SystemStateStore.currentStatus.set(SystemCurrentStatus.ERROR);
+            SystemErrorStore.error('Error while loading data.', e.message);
+        }
     }
 
     function globalKeyHandler(e: KeyboardEvent) {

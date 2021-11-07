@@ -5,6 +5,7 @@ import { ListenComponent, LoadComponent, LoadFileComponent, PauseComponent, Rese
 import { ConversationBranchComponent, ConversationClearComponent, ConversationHalfviewComponent, ConversationHeaderComponent, ConversationNarratorComponent, ConversationSendMessageComponent, ConversationSetAnchorComponent, ConversationSetBackgroundComponent, ConversationSetCharacterComponent, ConversationSetModeComponent, ConversationTextComponent } from "./component/machine/Conversation.SevenComponent";
 import { InfoAppendPageComponent, InfoDeletePageComponent, InfoGotoPageComponent, InfoNextPageComponent, InfoPrevPageComponent, LoadInfoPageComponent } from "./component/machine/Info.SevenComponent";
 import { SegueSetComponent } from "./component/machine/Segue.SevenComponent";
+import { TOCBgColorComponent, TOCBgImageComponent, TOCSetDataComponent } from "./component/machine/TableOfContents.SevenComponent";
 
 export const MACHINE = new SevenMachine();
 
@@ -42,6 +43,11 @@ export const MACHINE = new SevenMachine();
     InfoDeletePageComponent,
     InfoPrevPageComponent,
     InfoNextPageComponent,
+
+    // toc.
+    TOCBgColorComponent,
+    TOCBgImageComponent,
+    TOCSetDataComponent,
     
 ].forEach((v) => MACHINE.registerComponent(v));
 

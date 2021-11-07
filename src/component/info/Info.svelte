@@ -9,12 +9,13 @@ import MachineStore from "@src/store/Machine.Store";
 import SystemErrorStore from "@src/store/SystemError.Store";
 import { MACHINE } from "@src/seven/Machine";
 import { InfoPage } from "@src/store/machine/Info.Store";
-import SystemStateStore from "@src/store/SystemState.Store";
+import SystemStateStore, { SystemCurrentStatus } from "@src/store/SystemState.Store";
 
     let contentPageList: any[] = MachineStore.Info.pages.getValue();
     let currentPage = 0;
     let subscriptionList = [];
     let backgroundImageUrl;
+    let backgroundColor;
     let documentTitle = '';
 
     let displayedContent = '';
@@ -25,16 +26,27 @@ import SystemStateStore from "@src/store/SystemState.Store";
         subscriptionList.push(MachineStore.Info.currentPage.subscribe((v) => {
             currentPage = v;
             displayedContent = preprocessCurrentPage();
-            if (contentPageList[currentPage] && contentPageList[currentPage].backgroundImageUrl) {
-                backgroundImageUrl = contentPageList[currentPage].backgroundImageUrl;
+            if (contentPageList[currentPage]) {
+                console.log(contentPageList[currentPage])
+                if (contentPageList[currentPage].bg_image) {
+                    backgroundImageUrl = contentPageList[currentPage].bg_image;
+                }
+                if (contentPageList[currentPage].bg_color) {
+                    backgroundColor = contentPageList[currentPage].bg_color;
+                }
             }
             isFinalPage = v === contentPageList.length - 1;
         }));
         subscriptionList.push(MachineStore.Info.pages.subscribe((v) => {
             contentPageList = v;
             displayedContent = preprocessCurrentPage();
-            if (contentPageList[currentPage] && contentPageList[currentPage].backgroundImageUrl) {
-                backgroundImageUrl = contentPageList[currentPage].backgroundImageUrl;
+            if (contentPageList[currentPage]) {
+                if (contentPageList[currentPage].backgroundImageUrl) {
+                    backgroundImageUrl = contentPageList[currentPage].bg_image;
+                }
+                if (contentPageList[currentPage].backgroundImageUrl) {
+                    backgroundColor = contentPageList[currentPage].bg_color;
+                }
             }
         }));
         subscriptionList.push(SystemStateStore.currentDocumentTitle.subscribe((v) => {
@@ -74,6 +86,7 @@ import SystemStateStore from "@src/store/SystemState.Store";
                  Related data:
                  <pre>${JSON.stringify(contentPageList, undefined, '    ')}</pre>`
             );
+            SystemStateStore.currentStatus.set(SystemCurrentStatus.ERROR);
             console.log('error');
             return undefined;
         }
@@ -95,6 +108,8 @@ import SystemStateStore from "@src/store/SystemState.Store";
 <div class="info">
     {#if backgroundImageUrl}
     <img class="info-background-image" src={backgroundImageUrl} alt="info background" />
+    {:else if backgroundColor}
+    <div class={`info-background-image`} style={`background-color:${backgroundColor}`}>&nbsp;</div>
     {/if}
     <div class="info-content">
         {@html displayedContent}

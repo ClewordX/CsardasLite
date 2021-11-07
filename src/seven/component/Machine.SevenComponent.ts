@@ -10,9 +10,7 @@ import SystemStateStore, { SystemCurrentStatus } from "@src/store/SystemState.St
 export const ResetComponent: SevenComponent = {
     name: CommonSevenComponentIndex.Reset,
     call: (args: {[name: string]: any}) => {
-        [
-            
-        ].forEach((v) => v.reset());
+        MachineStore.reset();
         return true;
     }
 };

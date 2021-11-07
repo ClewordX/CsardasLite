@@ -8,8 +8,9 @@ export enum SegueTitlePosition {
 export type SegueStoreState = {
     currentTitle: string,
     currentTopTitle: string,
-    currentSubTitle: string,
     currentBgUrl: string,
+    currentBgColor: string,
+    currentDescription: string,
     currentPosition: SegueTitlePosition,
 }
 
@@ -18,8 +19,9 @@ function _SegueStore() {
     const { subscribe, getValue, set, update } = accessible({
         currentTitle: '',
         currentTopTitle: '',
-        currentSubTitle: '',
         currentBgUrl: '',
+        currentBgColor: '',
+        currentDescription: '',
         currentPosition: SegueTitlePosition.CENTER,
     });
     return {
@@ -29,8 +31,9 @@ function _SegueStore() {
             set({
                 currentTitle: '',
                 currentTopTitle: '',
-                currentSubTitle: '',
                 currentBgUrl: '',
+                currentBgColor: '',
+                currentDescription: '',
                 currentPosition: SegueTitlePosition.CENTER,
             });
         },

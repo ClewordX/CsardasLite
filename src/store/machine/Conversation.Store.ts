@@ -130,8 +130,8 @@ function _ConversationStore() {
         setBackground: (descriptor: ConversationBackgroundDescriptor) => {
             store.currentBackground.set(descriptor);
         },
-        setSizeMode(x: ConversationSizeMode) {
-            store.currentPhraseListState.currentSizeMode.set(x);
+        setSizeMode(x: ConversationSizeMode|'reset') {
+            store.currentPhraseListState.currentSizeMode.set(x === 'reset'? ConversationSizeMode.FULLVIEW : x);
         },
         setDisplayMode(x: ConversationDisplayMode) {
             store.currentPhraseListState.currentDisplayMode.set(x);

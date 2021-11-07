@@ -1,0 +1,107 @@
+$define:
+  (label):
+    (label): string
+  
+  (goto):
+    (goto): string
+
+  (load_file):
+    (load_file): string
+
+  pause:
+    pause: string
+  
+  # uses `wait: (n)m(n)s`. e.g. `wait: 3s` `wait: 1m30s`
+  wait:
+    wait: string
+
+
+title: string
+description?: string
+main:
+  $array:
+    $union:
+      - $ref: wait
+      - $ref: pause
+      - $ref: (label)
+      - $ref: (goto)
+      - $ref: (load_file)
+      - toc:
+          bg_color?: string
+          bg_image?: string
+          contents:
+            $array:
+              title: string
+              description?: string
+              file: string
+      - info:
+          contents:
+            $array:
+              type?: string
+              content: string
+              bg_image?: string
+              bg_color?: string
+      - segue:
+          title: string
+          subtitle?: string
+          toptitle?: string
+          bg_image?: string
+          bg_color?: string
+      - conversation:
+          character:
+            $array:
+              name: string
+              icon: string
+              position:
+                $enum:
+                  - left
+                  - right
+          contents:
+            $array:
+              $union:
+                - $ref: wait
+                - $ref: pause
+                - $ref: (label)
+                - $ref: (goto)
+                - h1: string
+                - h2: string
+                - h3: string
+                - _: string
+                - talk:
+                    name: string
+                    emotion?: string
+                    position?:
+                      $enum:
+                        - left
+                        - right
+                    text:
+                      $array: string
+                - mode:
+                    $enum:
+                      - halfview
+                      - chatbox
+                      - fullview
+                      - reset
+                - bg_image: string
+                - bg_color: string
+                - halfview:
+                    type:
+                      $enum:
+                        - image
+                        - iframe
+                    url: string
+                - message: string
+                - chatbox:
+                    $enum:
+                      - bottom_left
+                      - bottom_right
+                      - top_left
+                      - top_right
+
+                - branch:
+                    $array:
+                      text: string
+                      target: string
+                
+                
+
