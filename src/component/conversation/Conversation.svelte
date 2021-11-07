@@ -3,9 +3,11 @@ import MachineStore from "@src/store/Machine.Store";
 import { ConversationHalfviewDescriptor, ConversationSizeMode } from "@src/store/machine/Conversation.Store";
 
 import { onDestroy, onMount } from "svelte";
+import OmniconStore from "../omnicon/Omnicon.Store";
 import ConversationHalfview from "./ConversationHalfview.svelte";
 
 import PhraseList from "./PhraseList.svelte";
+import PhraseListUIStore from "./PhraseListUI.Store";
 
 let subscriptionList: any[] = [];
 let sizeMode: ConversationSizeMode;
@@ -19,11 +21,12 @@ onMount(() => {
     subscriptionList.push(MachineStore.Conversation.currentHalfview.subscribe((v) => {
         halfView = v;
     }));
-    console.log(halfViewElement);
 });
 
 onDestroy(() => {
     subscriptionList.forEach((v) => v());
+
+    OmniconStore.reset();
 });
 
 </script>

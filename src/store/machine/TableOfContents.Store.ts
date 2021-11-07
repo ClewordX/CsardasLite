@@ -3,7 +3,7 @@ import { accessible } from "@src/common/Accessible";
 export type TTableOfContentsItem = {
     title: string,
     description?: string,
-    targetFileName: string,
+    file: string,
 }
 
 export type TTableOfContentsBackgroundDescriptor =

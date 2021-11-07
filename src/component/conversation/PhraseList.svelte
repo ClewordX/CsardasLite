@@ -9,6 +9,7 @@ import { ConversationDisplayAnchor, ConversationPhraseDescriptor, ConversationSi
 import MachineStore from "@src/store/Machine.Store";
 import { MACHINE } from "@src/seven/Machine";
 import PhraseListUIStore from "./PhraseListUI.Store";
+import OmniconStore, { TOmniconMenuItem } from "../omnicon/Omnicon.Store";
 
 let phraseList: ConversationPhraseDescriptor[];
 let nextKeyLocked: boolean = false;
@@ -19,7 +20,8 @@ let bgSource: string = '';
 let phraseListSizeMode: ConversationSizeMode;
 let phraseListDisplayAnchor: ConversationDisplayAnchor;
 let showChatbox: boolean = true;
-let showByHide: boolean = false;
+let showFromHiding: boolean = false;
+let omniconToggleShownMenuItem: TOmniconMenuItem;
 onMount(() => {
     PhraseListUIStore.enableNext();
     subscriptionList.push(MachineStore.Conversation.currentPhraseListState.currentSizeMode.subscribe((v) => {
@@ -30,7 +32,7 @@ onMount(() => {
         phraseListDisplayAnchor = v;
     }));
     subscriptionList.push(MachineStore.Conversation.currentPhrases.subscribe((v) => {
-        showByHide = false;
+        PhraseListUIStore.showFromHiding = false;
         phraseList = v;
     }));
     subscriptionList.push(MachineStore.Conversation.currentBackground.subscribe((v) => {
@@ -41,7 +43,21 @@ onMount(() => {
     }));
     subscriptionList.push(PhraseListUIStore.isNextButtonAvailable.subscribe((v) => {
         nextKeyLocked = !v;
-    }))
+    }));
+});
+
+OmniconStore.add({
+    title: '显示/隐藏对话框',
+    callback: () => {
+        if (!showChatbox) {
+            showFromHiding = true;
+            showChatbox = true;
+        } else {
+            showChatbox = false;
+        }
+        
+        return true;
+    }
 });
 onDestroy(() => {
     subscriptionList.forEach((v) => v());
@@ -57,31 +73,15 @@ function nextPhrase() {
 let phraseListElement: HTMLDivElement;
 afterUpdate(() => {
     phraseListElement && phraseListElement.scrollTo({
-        behavior: showByHide? undefined : 'smooth',
+        behavior: PhraseListUIStore.showFromHiding? undefined : 'smooth',
         top: phraseListElement.scrollHeight
     });
 });
 
-let phraseListNextElement: HTMLDivElement;
-function showPhraseList() {
-    showByHide = true;
-    showChatbox = true;
-}
-function hidePhraseList() {
-    showChatbox = false;
-}
-    
 </script>
 
 <div class={`phrase-list-container phrase-list-container-${phraseListSizeMode}`}>
     <PhraseListBackground mode={phraseListSizeMode} type={bgType} source={bgSource} />
-    {#if phraseListSizeMode === 'chatbox'}
-        {#if showChatbox}
-            <div class="phrase-list-hide" on:click={hidePhraseList}> </div>
-        {:else}
-            <div class="phrase-list-show" on:click={showPhraseList}> </div>
-        {/if}
-    {/if}
     {#if showChatbox}
         <div class={`phrase-list phrase-list-${phraseListSizeMode} phrase-list-${phraseListSizeMode}-${phraseListDisplayAnchor}`} bind:this={phraseListElement}>
             {#if phraseList}
@@ -100,7 +100,7 @@ function hidePhraseList() {
             Empty.
             {/if}
         </div>
-        <div id="phrase-list-next" bind:this={phraseListNextElement} class={`phrase-list-next phrase-list-next-${phraseListSizeMode} phrase-list-next-${phraseListSizeMode}-${phraseListDisplayAnchor} phrase-list-next-${nextKeyLocked}`} on:click={nextPhrase}>
+        <div id="phrase-list-next" class={`phrase-list-next phrase-list-next-${phraseListSizeMode} phrase-list-next-${phraseListSizeMode}-${phraseListDisplayAnchor} phrase-list-next-${nextKeyLocked}`} on:click={nextPhrase}>
             <span>&rarr;</span>
         </div>
     {/if}
@@ -118,24 +118,6 @@ function hidePhraseList() {
     }
     .phrase-list-container-halfview {
         right: 60% !important;
-    }
-    .phrase-list-show {
-        z-index: 100011;
-        background-color: black;
-        color: white;
-        border: 1px white solid;
-        position: fixed;
-        width: 1em;
-        height: 1em;
-    }
-    .phrase-list-hide {
-        z-index: 100011;
-        background-color: #000000df;
-        color: white;
-        border: 1px white solid;
-        position: fixed;
-        width: 1em;
-        height: 1em;
     }
     .phrase-list {
         z-index: 100010;

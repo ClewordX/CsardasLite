@@ -1,5 +1,4 @@
 import { accessible } from "@src/common/Accessible";
-import type { Accessible } from "@src/common/Accessible";
 
 
 function _SystemWaitingStore() {

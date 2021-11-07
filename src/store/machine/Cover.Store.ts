@@ -1,28 +1,28 @@
 import { Accessible, accessible } from "@src/common/Accessible";
 
-export enum SegueTitlePosition {
+export enum CoverTitlePosition {
     BOTTOM_LEFT = 'bottom_left',
     CENTER = 'center',
 }
 
-export type SegueStoreState = {
+export type CoverStoreState = {
     currentTitle: string,
     currentTopTitle: string,
     currentBgUrl: string,
     currentBgColor: string,
     currentDescription: string,
-    currentPosition: SegueTitlePosition,
+    currentPosition: CoverTitlePosition,
 }
 
 
-function _SegueStore() {
+function _CoverStore() {
     const { subscribe, getValue, set, update } = accessible({
         currentTitle: '',
         currentTopTitle: '',
         currentBgUrl: '',
         currentBgColor: '',
         currentDescription: '',
-        currentPosition: SegueTitlePosition.CENTER,
+        currentPosition: CoverTitlePosition.BOTTOM_LEFT,
     });
     return {
         subscribe,
@@ -34,13 +34,13 @@ function _SegueStore() {
                 currentBgUrl: '',
                 currentBgColor: '',
                 currentDescription: '',
-                currentPosition: SegueTitlePosition.CENTER,
+                currentPosition: CoverTitlePosition.BOTTOM_LEFT,
             });
         },
         set,
     }
 }
 
-let _store = _SegueStore();
+let _store = _CoverStore();
 
 export default _store;

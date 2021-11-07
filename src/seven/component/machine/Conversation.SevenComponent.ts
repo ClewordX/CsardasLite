@@ -1,5 +1,5 @@
 import type { SevenComponent, SevenMachine } from "@bctnry/seven";
-import { ConversationMessageReceiverManager } from "@src/component/demonstration/MessageReceiverManager";
+import { ConversationMessageReceiverManager } from "@src/component/conversation/MessageReceiverManager";
 import { ConversationSevenComponentIndex } from "@src/seven/SevenComponentIndex";
 import MachineStore from "@src/store/Machine.Store";
 import { ConversationPhraseType } from "@src/store/machine/Conversation.Store";

@@ -1,28 +1,28 @@
 import { accessible } from "@src/common/Accessible";
-import SegueStore from "@src/store/machine/Segue.Store";
+import CoverStore from "@src/store/machine/Cover.Store";
 import ConversationStore from "@src/store/machine/Conversation.Store";
 import InfoStore from "./machine/Info.Store";
 import TableOfContentsStore from "./machine/TableOfContents.Store";
 
 export enum EMode {
     TOC = 'toc',
-    SEGUE = 'segue',
+    COVER = 'cover',
     CONVERSATION = 'conversation',
     INFO = 'info',
 }
 
 function _MachineStore() {
     let store = {
-        currentMode: accessible<EMode>(EMode.SEGUE),
+        currentMode: accessible<EMode>(EMode.COVER),
 
-        Segue: SegueStore,
+        Cover: CoverStore,
         Conversation: ConversationStore,
         Info: InfoStore,
         TableOfContents: TableOfContentsStore,
 
         reset: () => {
-            store.currentMode.set(EMode.SEGUE);
-            store.Segue.reset();
+            store.currentMode.set(EMode.COVER);
+            store.Cover.reset();
             store.Conversation.reset();
             store.Info.reset();
             store.TableOfContents.reset();

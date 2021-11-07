@@ -11,8 +11,8 @@ export enum CommonSevenComponentIndex {
     LoadFile = 'LOAD_FILE',
 }
 
-export enum SegueSevenComponentIndex {
-    Set = 'SEGUE_SET',
+export enum CoverSevenComponentIndex {
+    Set = 'COVER_SET',
 }
 
 export enum ConversationSevenComponentIndex {

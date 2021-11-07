@@ -1,17 +1,17 @@
 import type { SevenComponent, SevenMachine } from "@bctnry/seven";
-import { SegueSevenComponentIndex } from "@src/seven/SevenComponentIndex";
+import { CoverSevenComponentIndex } from "@src/seven/SevenComponentIndex";
 import MachineStore from "@src/store/Machine.Store";
 
-export const SegueSetComponent: SevenComponent = {
-    name: SegueSevenComponentIndex.Set,
+export const CoverSetComponent: SevenComponent = {
+    name: CoverSevenComponentIndex.Set,
     call: (args: {[name: string]: any}) => {
-        MachineStore.Segue.set({
+        MachineStore.Cover.set({
             currentTitle: args.title || '',
             currentTopTitle: args.topTitle || '',
             currentBgUrl: args.bgImage || '',
             currentBgColor: args.bgColor || '',
             currentDescription: args.description || '',
-            currentPosition: args.position || 'center',
+            currentPosition: args.position || 'bottom_left',
         });
     }
 }

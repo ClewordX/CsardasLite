@@ -7,9 +7,7 @@
     import ErrorScreen from "./ErrorScreen.svelte";
     import Machine from "./Machine.svelte";
     import WaitingScreen from "./WaitingScreen.svelte";
-import { MACHINE } from "@src/seven/Machine";
-import { jit } from "@src/jit/JIT";
-import MachineStore from "@src/store/Machine.Store";
+import { GlobalLoadCourseData } from "@src/seven/Common";
 
 
 
@@ -29,12 +27,7 @@ import MachineStore from "@src/store/Machine.Store";
         console.log('message', e);
         let data = (window as any).__SESSION = e.data.docsJson;
         let entry = (window as any).__ENTRY = e.data.main;
-        SystemStateStore.notReady();
-        let jitted = jit(data[entry]);
-        MACHINE.loadProgram(jitted);
-        MACHINE.unlock();
-        SystemStateStore.ready();
-        MACHINE.step();        
+        GlobalLoadCourseData(data[entry]);
     });
 
 </script>

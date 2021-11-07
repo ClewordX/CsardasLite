@@ -41,12 +41,12 @@ main:
               content: string
               bg_image?: string
               bg_color?: string
-      - segue:
+      - cover:
           title: string
-          subtitle?: string
           toptitle?: string
           bg_image?: string
           bg_color?: string
+          description?: string
       - conversation:
           character:
             $array:

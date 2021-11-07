@@ -2,11 +2,10 @@
 
     import Main from './Main.svelte';
     import * as yaml from 'js-yaml';
-    import { jit } from '@src/jit/JIT';
-    import { MACHINE } from '@src/seven/Machine';
     import { onDestroy, onMount } from 'svelte';
     import SystemStateStore, { SystemCurrentStatus } from '@src/store/SystemState.Store';
 import SystemErrorStore from '@src/store/SystemError.Store';
+import { GlobalLoadCourseData } from '@src/seven/Common';
 
     // editor.
     let mouseX = 0;
@@ -29,11 +28,7 @@ import SystemErrorStore from '@src/store/SystemError.Store';
     function loadMockProgram() {
         SystemStateStore.notReady();
         try {
-            let jitted = jit(yaml.load(elemEditor.value));
-            MACHINE.loadProgram(jitted);
-            MACHINE.unlock();
-            SystemStateStore.ready();
-            MACHINE.step();
+            GlobalLoadCourseData(yaml.load(elemEditor.value));
         } catch (e) {
             SystemStateStore.currentStatus.set(SystemCurrentStatus.ERROR);
             SystemErrorStore.error('Error while loading data.', e.message);

@@ -4,7 +4,7 @@ import { ErrorComponent } from "./component/Error.SevenComponent";
 import { ListenComponent, LoadComponent, LoadFileComponent, PauseComponent, ResetComponent, SetMachineModeComponent } from "./component/Machine.SevenComponent";
 import { ConversationBranchComponent, ConversationClearComponent, ConversationHalfviewComponent, ConversationHeaderComponent, ConversationNarratorComponent, ConversationSendMessageComponent, ConversationSetAnchorComponent, ConversationSetBackgroundComponent, ConversationSetCharacterComponent, ConversationSetModeComponent, ConversationTextComponent } from "./component/machine/Conversation.SevenComponent";
 import { InfoAppendPageComponent, InfoDeletePageComponent, InfoGotoPageComponent, InfoNextPageComponent, InfoPrevPageComponent, LoadInfoPageComponent } from "./component/machine/Info.SevenComponent";
-import { SegueSetComponent } from "./component/machine/Segue.SevenComponent";
+import { CoverSetComponent } from "./component/machine/Cover.SevenComponent";
 import { TOCBgColorComponent, TOCBgImageComponent, TOCSetDataComponent } from "./component/machine/TableOfContents.SevenComponent";
 
 export const MACHINE = new SevenMachine();
@@ -20,8 +20,8 @@ export const MACHINE = new SevenMachine();
     LoadFileComponent,
     SetMachineModeComponent,
 
-    // segue.
-    SegueSetComponent,
+    // Cover.
+    CoverSetComponent,
 
     // conversation.
     ConversationHeaderComponent,

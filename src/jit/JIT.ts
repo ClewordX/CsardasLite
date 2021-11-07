@@ -4,7 +4,7 @@ import { AsTypeTaggedDict } from "@src/utils/AuxFuncs";
 import { _pushComponentCall } from "./Common";
 import { CompileForConversation } from "./subsystem/Conversation";
 import { compileMachineCommonInstr, isMachineCommonInstr } from "./subsystem/MachineCommon";
-import { CommonSevenComponentIndex, InfoSevenComponentIndex, SegueSevenComponentIndex, ConversationSevenComponentIndex, TableOfContentsComponentIndex } from '@src/seven/SevenComponentIndex';
+import { CommonSevenComponentIndex, InfoSevenComponentIndex, CoverSevenComponentIndex, ConversationSevenComponentIndex, TableOfContentsComponentIndex } from '@src/seven/SevenComponentIndex';
 // NOTE: we have to do at least 2 pass here because we can't possibly figure out
 // the position of every (label) in the source code.
 // this leads to the discrimination of two different kind of blocks: those which
@@ -80,9 +80,9 @@ function _pass1_generation(x: any) {
                 });
                 break;
             }
-            case 'segue': {
-                _pushComponentCall(res, CommonSevenComponentIndex.SetMode, {modeType: 'segue'});
-                _pushComponentCall(res, SegueSevenComponentIndex.Set, {
+            case 'cover': {
+                _pushComponentCall(res, CommonSevenComponentIndex.SetMode, {modeType: 'cover'});
+                _pushComponentCall(res, CoverSevenComponentIndex.Set, {
                     title: X.data.title || undefined,
                     topTitle: X.data.toptitle || undefined,
                     bgImage: X.data.bg_image || undefined,
