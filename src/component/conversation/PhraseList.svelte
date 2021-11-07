@@ -21,7 +21,6 @@ let phraseListSizeMode: ConversationSizeMode;
 let phraseListDisplayAnchor: ConversationDisplayAnchor;
 let showChatbox: boolean = true;
 let showFromHiding: boolean = false;
-let omniconToggleShownMenuItem: TOmniconMenuItem;
 onMount(() => {
     PhraseListUIStore.enableNext();
     subscriptionList.push(MachineStore.Conversation.currentPhraseListState.currentSizeMode.subscribe((v) => {
@@ -32,7 +31,7 @@ onMount(() => {
         phraseListDisplayAnchor = v;
     }));
     subscriptionList.push(MachineStore.Conversation.currentPhrases.subscribe((v) => {
-        PhraseListUIStore.showFromHiding = false;
+        showFromHiding = false;
         phraseList = v;
     }));
     subscriptionList.push(MachineStore.Conversation.currentBackground.subscribe((v) => {
@@ -73,7 +72,7 @@ function nextPhrase() {
 let phraseListElement: HTMLDivElement;
 afterUpdate(() => {
     phraseListElement && phraseListElement.scrollTo({
-        behavior: PhraseListUIStore.showFromHiding? undefined : 'smooth',
+        behavior: showFromHiding? undefined : 'smooth',
         top: phraseListElement.scrollHeight
     });
 });
