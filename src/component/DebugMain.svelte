@@ -29,6 +29,7 @@ import { GlobalLoadCourseData } from '@src/seven/Common';
         SystemStateStore.notReady();
         try {
             GlobalLoadCourseData(yaml.load(elemEditor.value));
+            SystemStateStore.ready();
         } catch (e) {
             SystemStateStore.currentStatus.set(SystemCurrentStatus.ERROR);
             SystemErrorStore.error('Error while loading data.', e.message);

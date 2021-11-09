@@ -84,13 +84,17 @@ main:
                       - reset
                 - bg_image: string
                 - bg_color: string
+                - bg_iframe: string
                 - halfview:
                     type:
                       $enum:
                         - image
                         - iframe
                     url: string
-                - message: string
+                - message:
+                    $union:
+                      - string
+                      - object
                 - chatbox:
                     $enum:
                       - bottom_left

@@ -4,6 +4,7 @@ import { CommonSevenComponentIndex } from "@src/seven/SevenComponentIndex";
 import MachineStore from "@src/store/Machine.Store";
 import SystemErrorStore from "@src/store/SystemError.Store";
 import SystemStateStore, { SystemCurrentStatus } from "@src/store/SystemState.Store";
+import { GlobalLoadCourseData, RetrieveDocument } from "../Common";
 
 
 
@@ -59,17 +60,13 @@ export const LoadFileComponent: SevenComponent = {
     name: CommonSevenComponentIndex.LoadFile,
     call: (args: {[name: string]: any}, machine: SevenMachine) => {
         try {
-            let data = (window as any).__CSARDAS?.session.docsJson[args.fileName];
+            let data = RetrieveDocument(args.fileName);
             if (!data) {
                 throw {
                     message: `No file named ${args.fileName}`,
                 };
             }
-            let jitted = jit(data);
-            machine.loadProgram(jitted);
-            machine.unlock();
-            SystemStateStore.ready();
-            machine.step();
+            GlobalLoadCourseData(data);
         } catch (e) {
             SystemErrorStore.error(
                 e.message,

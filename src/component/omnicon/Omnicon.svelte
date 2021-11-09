@@ -1,6 +1,6 @@
 <script lang="ts">
 import { SYSTEM_NAME, SYSTEM_VER } from "@src/common/Constants";
-import { GlobalLoadCourseData } from "@src/seven/Common";
+import { GlobalLoadCourseData, RetrieveDocument, RetrieveEntryDocument } from "@src/seven/Common";
 import { onDestroy, onMount } from "svelte";
 import { Unsubscriber } from "svelte/store";
 import OmniconStore, { TOmniconMenuItem } from "./Omnicon.Store";
@@ -75,8 +75,9 @@ import OmniconStore, { TOmniconMenuItem } from "./Omnicon.Store";
     }
 
     function handleRestart() {
-        let session = (window as any).__SESSION;
-        if (!session) {
+        try {
+            GlobalLoadCourseData(RetrieveEntryDocument());
+        } catch {
             pageHTMLContent = `
             似乎并没有加载任何文档。<br />
             `;
@@ -85,8 +86,6 @@ import OmniconStore, { TOmniconMenuItem } from "./Omnicon.Store";
                 isShowingPage = false;
             }, 3000);
         }
-        let entry = (window as any).__ENTRY;
-        GlobalLoadCourseData(session[entry]);
         isMenuShown = false;
     }
 
@@ -121,7 +120,7 @@ onDestroy(() => {
     </div>
     {:else}
     <div class="clite-omnicon-menu-item" on:click={handleShowAboutPage}>关于学习系统</div>
-    <div class="clite-omnicon-menu-item" on:click={handleRestart}>重新开始学习</div>
+    <div class="clite-omnicon-menu-item" on:click={handleRestart}>返回课程主页</div>
     <div class="clite-omnicon-menu-item" on:click={handleResetOmniconPosition}>重置Omnicon位置</div>
         {#if customMenuItemList.length > 0}
             <hr />

@@ -51,5 +51,7 @@ export const MACHINE = new SevenMachine();
     
 ].forEach((v) => MACHINE.registerComponent(v));
 
+(window as any).MACHINE = MACHINE;
+
 
 console.log(`SevenMachine component registration complete.`);

@@ -32,6 +32,7 @@ export enum ConversationPhraseType {
     CHARACTER = 2,
     HEADER = 3,
     BRANCHING = 4,
+    MESSAGE_SENDING = 5,
 }
 
 export type ConversationNarratorPhraseDescriptor = {
@@ -59,11 +60,21 @@ export type ConversationBranchingDescriptor = {
         target?: number,
     }[]
 }
+
+export type ConversationMessageSendingPhraseDescriptor = {
+    type: ConversationPhraseType.MESSAGE_SENDING,
+    actions: {
+        name: string,
+        message: any
+    }[],
+    content?: string,
+}
 export type ConversationPhraseDescriptor =
     ConversationNarratorPhraseDescriptor
     | ConversationCharacterPhraseDescriptor
     | ConversationHeaderDescriptor
     | ConversationBranchingDescriptor
+    | ConversationMessageSendingPhraseDescriptor
 ;
 
 export type ConversationBackgroundDescriptor = 

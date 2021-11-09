@@ -1,5 +1,5 @@
 <script lang="ts">
-import { GlobalLoadCourseData } from "@src/seven/Common";
+import { GlobalLoadCourseData, RetrieveDocument } from "@src/seven/Common";
 
 import MachineStore from "@src/store/Machine.Store";
 
@@ -34,8 +34,7 @@ onDestroy(() => {
 
 function handleTOCItemClick(x: number) {
     return (e) => {
-        let currentSession = (window as any).__SESSION;
-        GlobalLoadCourseData(currentSession[contentList[x].file]);
+        GlobalLoadCourseData(RetrieveDocument(contentList[x].file));
     }
 }
 

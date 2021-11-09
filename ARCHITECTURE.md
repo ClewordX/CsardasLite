@@ -52,8 +52,9 @@ Csárdás Lite是由Csárdás分化出来的学习系统，目的是用于简短
     + (pause) `CONV_NARRATOR`(text: string)
     + (pause) `CONV_TEXT`(name: string, iconUrl: string, position?: string, text: string)
       - `_order: number`: The order of phrase. When the order is bigger than 0, the name of the character will not be displayed.
-    + `CONV_SET_MODE`(mode: Mode)
-      - `type Mode = 'fullview' | 'chatbox'`
+    + (pause)`CONV_SET_MODE`(mode: Mode)
+      - `type Mode = 'fullview' | 'chatbox' | 'halfview' | 'reset'`
+      - 当mode=reset时，这个指令不会暂停。
     + `CONV_SET_ANCHOR`(anchor: Anchor)
       - `type Anchor = (TOP_LEFT)1 | (TOP_RIGHT)2 | (BOTTOM_LEFT)3 | (BOTTOM_RIGHT)4'
     + (pause) `CONV_BRANCH`(branchList: {text: string, target: number}[])

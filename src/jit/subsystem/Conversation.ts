@@ -61,7 +61,7 @@ export function CompileForConversation(res: SevenMachineProgram, x: any) {
             }
             case 'message': {
                 _pushComponentCall(res, ConversationSevenComponentIndex.SendMessage, {
-                    data: yaml.load(v.data),
+                    data: v.data,
                     stopAfterSend: true,
                 });
                 break;
@@ -78,9 +78,13 @@ export function CompileForConversation(res: SevenMachineProgram, x: any) {
                 _pushComponentCall(res, ConversationSevenComponentIndex.SetBackground, { type: 'color', color: v.data });
                 break;
             }
+            case 'bg_iframe': {
+                _pushComponentCall(res, ConversationSevenComponentIndex.SetBackground, { type: 'iframe', url: v.data });
+                break;
+            }
             case 'halfview': {
-                _pushComponentCall(res, ConversationSevenComponentIndex.SetMode, { mode: 'halfview' });
                 _pushComponentCall(res, ConversationSevenComponentIndex.SetHalfview, v.data);
+                _pushComponentCall(res, ConversationSevenComponentIndex.SetMode, { mode: 'halfview' });
                 break;
             }
             case 'chatbox': {

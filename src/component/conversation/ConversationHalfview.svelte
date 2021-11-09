@@ -1,14 +1,14 @@
 <script lang="ts">
 import { ConversationHalfviewDescriptor } from "@src/store/machine/Conversation.Store";
 
-import { afterUpdate } from "svelte";
+import { afterUpdate, onMount } from "svelte";
 import { ConversationMessageReceiverManager } from "./MessageReceiverManager";
 
 
     export let descriptor: ConversationHalfviewDescriptor;
     let halfviewIframe: HTMLIFrameElement;
 
-    afterUpdate(() => {
+    onMount(() => {
         if (descriptor.type === 'iframe') {
             console.log(`halfview`, halfviewIframe);
             ConversationMessageReceiverManager.registerCurrentMessageReceiver(halfviewIframe);

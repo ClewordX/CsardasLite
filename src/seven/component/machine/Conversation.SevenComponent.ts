@@ -55,7 +55,9 @@ export const ConversationSetModeComponent: SevenComponent = {
     name: ConversationSevenComponentIndex.SetMode,
     call: (args: {[name: string]: any}, m: SevenMachine) => {
         MachineStore.Conversation.setSizeMode(args.mode);
-        return true;
+        if (args.mode === 'reset') {
+            return true;
+        }
     }
 };
 
@@ -86,7 +88,6 @@ export const ConversationHalfviewComponent: SevenComponent = {
 export const ConversationBranchComponent: SevenComponent = {
     name: ConversationSevenComponentIndex.Branch,
     call: (args: {[name: string]: any}, m: SevenMachine) => {
-        console.log(args);
         MachineStore.Conversation.nextPhraseWith({
             type: ConversationPhraseType.BRANCHING,
             choice: args.branchList
@@ -97,7 +98,7 @@ export const ConversationBranchComponent: SevenComponent = {
 export const ConversationSendMessageComponent: SevenComponent = {
     name: ConversationSevenComponentIndex.SendMessage,
     call: (args: {[name: string]: any}, m: SevenMachine) => {
-        ConversationMessageReceiverManager.sendMessage({ data: args.data });
+        ConversationMessageReceiverManager.sendMessage(args.data);
         return !!!args.stopAfterSend;
     }
 }

@@ -7,7 +7,7 @@
     import ErrorScreen from "./ErrorScreen.svelte";
     import Machine from "./Machine.svelte";
     import WaitingScreen from "./WaitingScreen.svelte";
-import { GlobalLoadCourseData } from "@src/seven/Common";
+import { GlobalLoadCourseData, InitializeDocumentGroup, RetrieveDocument } from "@src/seven/Common";
 
 
 
@@ -25,9 +25,12 @@ import { GlobalLoadCourseData } from "@src/seven/Common";
 
     window.addEventListener('message', (e) => {
         console.log('message', e);
-        let data = (window as any).__SESSION = e.data.docsJson;
-        let entry = (window as any).__ENTRY = e.data.main;
-        GlobalLoadCourseData(data[entry]);
+        if (e.data.protocol === 'clepub') {
+            InitializeDocumentGroup(e.data);
+            SystemStateStore.notReady();
+            GlobalLoadCourseData(RetrieveDocument(e.data.main));
+            SystemStateStore.ready();
+        }
     });
 
 </script>
