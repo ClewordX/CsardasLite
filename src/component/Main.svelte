@@ -8,6 +8,7 @@
     import Machine from "./Machine.svelte";
     import WaitingScreen from "./WaitingScreen.svelte";
 import { GlobalLoadCourseData, InitializeDocumentGroup, RetrieveDocument } from "@src/seven/Common";
+import SystemErrorStore from "@src/store/SystemError.Store";
 
 
 
@@ -27,7 +28,13 @@ import { GlobalLoadCourseData, InitializeDocumentGroup, RetrieveDocument } from 
         console.log('message', e);
         if (e.data.protocol === 'clepub') {
             InitializeDocumentGroup(e.data);
+            if (!e.data.docsJson) {
+                SystemStateStore.currentStatus.set(SystemCurrentStatus.ERROR);
+                SystemErrorStore.error('No document');
+                return; 
+            }
             SystemStateStore.notReady();
+            SystemStateStore.currentDocumentFileName.set(e.data.main);
             GlobalLoadCourseData(RetrieveDocument(e.data.main));
             SystemStateStore.ready();
         }

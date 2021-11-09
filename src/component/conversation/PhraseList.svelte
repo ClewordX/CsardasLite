@@ -46,6 +46,7 @@ onMount(() => {
 });
 
 OmniconStore.add({
+    id: 'TOGGLE_CHATBOX_VISIBILITY',
     title: '显示/隐藏对话框',
     callback: () => {
         if (!showChatbox) {

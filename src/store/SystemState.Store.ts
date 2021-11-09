@@ -9,6 +9,7 @@ export enum SystemCurrentStatus {
 function _SystemStateStore() {
     let store = {
         currentStatus: accessible(SystemCurrentStatus.NONE),
+        currentDocumentFileName: accessible(''),
         currentDocumentTitle: accessible(''),
         currentDocumentDescription: accessible(''),
         

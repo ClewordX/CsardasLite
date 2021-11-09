@@ -95,6 +95,11 @@ main:
                     $union:
                       - string
                       - object
+                # - multi_message:
+                #     $array:
+                #       $union:
+                #         - string
+                #         - object
                 - chatbox:
                     $enum:
                       - bottom_left

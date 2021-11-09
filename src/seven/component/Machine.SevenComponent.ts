@@ -66,6 +66,7 @@ export const LoadFileComponent: SevenComponent = {
                     message: `No file named ${args.fileName}`,
                 };
             }
+            SystemStateStore.currentDocumentFileName.set(args.fileName);
             GlobalLoadCourseData(data);
         } catch (e) {
             SystemErrorStore.error(

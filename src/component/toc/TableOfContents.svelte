@@ -3,10 +3,11 @@ import { GlobalLoadCourseData, RetrieveDocument } from "@src/seven/Common";
 
 import MachineStore from "@src/store/Machine.Store";
 
-import { TTableOfContentsBackgroundDescriptor, TTableOfContentsItem } from "@src/store/machine/TableOfContents.Store";
+import type { TTableOfContentsBackgroundDescriptor, TTableOfContentsItem } from "@src/store/machine/TableOfContents.Store";
 import SystemStateStore from "@src/store/SystemState.Store";
 import { onDestroy, onMount } from "svelte";
-import { Unsubscriber } from "svelte/store";
+import type { Unsubscriber } from "svelte/store";
+import OmniconStore from "../omnicon/Omnicon.Store";
 
 
 
@@ -15,6 +16,7 @@ let contentList: TTableOfContentsItem[] = MachineStore.TableOfContents.currentDa
 let documentTitle: string = '';
 
 let subscriptionList: Unsubscriber[] = [];
+let documentFileName: string = SystemStateStore.currentDocumentFileName.getValue();
 onMount(() => {
     subscriptionList.push(
         MachineStore.TableOfContents.currentBackground.subscribe((v) => {
@@ -30,6 +32,16 @@ onMount(() => {
 });
 onDestroy(() => {
     subscriptionList.forEach((v) => v());
+});
+
+OmniconStore.addOrReplace({
+    id: 'RETURN_TO_TOC',
+    title: '返回目录',
+    callback: () => {
+        SystemStateStore.currentDocumentFileName.set(documentFileName);
+        GlobalLoadCourseData(RetrieveDocument(documentFileName));
+        return true;
+    }
 });
 
 function handleTOCItemClick(x: number) {

@@ -1,6 +1,6 @@
 <script lang="ts">
 import MachineStore from "@src/store/Machine.Store";
-import { ConversationHalfviewDescriptor, ConversationSizeMode } from "@src/store/machine/Conversation.Store";
+import type { ConversationHalfviewDescriptor, ConversationSizeMode } from "@src/store/machine/Conversation.Store";
 
 import { onDestroy, onMount } from "svelte";
 import OmniconStore from "../omnicon/Omnicon.Store";
@@ -26,7 +26,7 @@ onMount(() => {
 onDestroy(() => {
     subscriptionList.forEach((v) => v());
 
-    OmniconStore.reset();
+    OmniconStore.removeById('TOGGLE_CHATBOX_VISIBILITY');
 });
 
 </script>

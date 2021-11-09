@@ -2,7 +2,7 @@
 import { SYSTEM_NAME, SYSTEM_VER } from "@src/common/Constants";
 import { GlobalLoadCourseData, RetrieveDocument, RetrieveEntryDocument } from "@src/seven/Common";
 import { onDestroy, onMount } from "svelte";
-import { Unsubscriber } from "svelte/store";
+import type { Unsubscriber } from "svelte/store";
 import OmniconStore, { TOmniconMenuItem } from "./Omnicon.Store";
 
 
@@ -77,6 +77,7 @@ import OmniconStore, { TOmniconMenuItem } from "./Omnicon.Store";
     function handleRestart() {
         try {
             GlobalLoadCourseData(RetrieveEntryDocument());
+            OmniconStore.reset();
         } catch {
             pageHTMLContent = `
             似乎并没有加载任何文档。<br />

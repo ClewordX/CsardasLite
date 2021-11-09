@@ -66,6 +66,15 @@ export function CompileForConversation(res: SevenMachineProgram, x: any) {
                 });
                 break;
             }
+            case 'multi_message': {
+                v.data.forEach((j, i) => {
+                    _pushComponentCall(res, ConversationSevenComponentIndex.SendMessage, {
+                        data: j,
+                        stopAfterSend: i === v.data.length - 1
+                    });
+                });
+                break;
+            }
             case 'mode': {
                 _pushComponentCall(res, ConversationSevenComponentIndex.SetMode, { mode: v.data });
                 break;
